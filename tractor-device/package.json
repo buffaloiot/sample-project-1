@@ -1,0 +1,13 @@
+{
+	"name": "tractor_device",
+	"description": "Tractor device emulator",
+	"version": "0.0.1",
+	"main": "dist/index.js",
+	"scripts": {
+		"compile": "mkdir -p dist && tar -cf - src | tar -C dist -xf - --strip 1"
+	},
+	"dependencies": {
+		"mqtt": "^4.2.1",
+		"minimist": "^1.2.5"
+	}
+}

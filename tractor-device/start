@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+# Compile if desired
+if [ -n "${COMPILE}" ]; then
+	make package
+fi
+
+# run
+node dist/index.js $@
