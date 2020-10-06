@@ -2,7 +2,7 @@
 	"name": "tractor_device",
 	"description": "Tractor device emulator",
 	"version": "0.0.1",
-	"main": "dist/index.js",
+	"main": "dist/device/index.js",
 	"scripts": {
 		"compile": "mkdir -p dist && tar -cf - src | tar -C dist -xf - --strip 1"
 	},

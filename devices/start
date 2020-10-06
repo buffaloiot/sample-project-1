@@ -6,4 +6,4 @@ if [ -n "${COMPILE}" ]; then
 fi
 
 # run
-node dist/index.js $@
+node dist/device/index.js $@

@@ -1,0 +1,50 @@
+{
+	"mqtt": {
+		"host": "172.17.0.1",
+		"port": 1883,
+		"connectTimeout": 30000
+	},
+	"device": {
+		"interval": 5000,
+		"topicPrefix": {
+			"publish": "farm/tractor/device1",
+			"subscribe": "farm/tractor/device1/cmd"
+		},
+		"sensors": {
+			"speed": {
+				"type": "speed",
+				"enabled": true,
+				"speed": 0,
+				"simulator": {
+					"type": "stair",
+					"step_interval": 5,
+					"min": 0,
+					"max": 60
+				}
+			},
+			"wheel_position": {
+				"type": "wheel",
+				"enabled": true,
+				"position": 0,
+				"min_position": -45,
+				"max_position": 45,
+				"simulator": {
+					"type": "static"
+				}
+			},
+			"temp": {
+				"type": "temp",
+				"enabled": true,
+				"temp": 12,
+				"simulator": {
+					"type": "random",
+					"step_interval": 1,
+					"min": 12,
+					"max": 130,
+					"incr_threshold": 0.2,
+					"decr_threshold": 0.4
+				}
+			}
+		}
+	}
+}

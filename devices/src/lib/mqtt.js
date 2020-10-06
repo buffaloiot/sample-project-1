@@ -16,7 +16,7 @@ module.exports = config => {
 		}
 		const url = "mqtt://" + mqttConfig.host + ":" + mqttConfig.port
 		const client = Mqtt.connect(url, options)
-		logger.debug('MQTT url: ', url)
+		logger.debug('MQTT url: ' + url)
 		client.on('connect', () => {
 			// Connection established
 			resolve(client)

@@ -1,3 +1,0 @@
-# Warehouse Device
-
-TBD

@@ -1,6 +1,6 @@
 // Tractor Device Emulator
 
-const cli = require("./lib/cli")
+const cli = require("../lib/cli")
 const emulator = require("./lib/emulator")
 
 module.exports = cli

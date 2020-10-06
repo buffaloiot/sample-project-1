@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+# current directory
+SCRIPTS_DIR=$(cd -P -- "$(dirname -- "$0")" && pwd -P)
+
+docker run -d -it -p 1883:1883 -p 9001:9001 -v ${SCRIPTS_DIR}/run-mosquitto.conf:/mosquitto/config/mosquitto.conf eclipse-mosquitto

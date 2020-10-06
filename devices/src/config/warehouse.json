@@ -1,0 +1,40 @@
+{
+	"mqtt": {
+		"host": "172.17.0.1",
+		"port": 1883,
+		"connectTimeout": 30000
+	},
+	"device": {
+		"interval": 10000,
+		"topicPrefix": {
+			"publish": "farm/warehouse/device2",
+			"subscribe": "farm/warehouse/device2/cmd"
+		},
+		"sensors": {
+			"temp": {
+				"type": "thermostat",
+				"enabled": true,
+				"temp": 10,
+				"target": 0,
+				"simulator": {
+					"type": "temp",
+					"step_interval": 1,
+					"decr_min": 2,
+					"incr_max": 2
+				}
+			},
+			"door_state": {
+				"type": "door",
+				"enabled": true,
+				"state": 0,
+				"simulator": {
+					"type": "random",
+					"min": 0,
+					"max": 1,
+					"incr_threshold": 0.9,
+					"decr_threshold": 0.5
+				}
+			}
+		}
+	}
+}
