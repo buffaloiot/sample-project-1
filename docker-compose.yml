@@ -1,0 +1,46 @@
+version: '3.1'
+
+services:
+
+  postgres:
+    image: postgres
+    container_name: sample-db
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: example
+    volumes:
+      - ${PWD}/db/initdb.d:/docker-entrypoint-initdb.d
+
+  mosquitto:
+    image: eclipse-mosquitto
+    container_name: sample-broker
+    restart: always
+    ports:
+      - 1883:1883
+      - 9001:9001
+    volumes:
+      - ${PWD}/broker/config/mosquitto.conf:/mosquitto/config/mosquitto.conf
+
+  tractor:
+    image: device
+    build: devices/docker/device
+    container_name: tractor-device
+    restart: always
+    environment:
+      LOG_LEVEL: debug
+      CONFIG_FILE: /opt/tractor-device/config.json
+    volumes:
+      - ${PWD}/devices/src/config/tractor.json:/opt/tractor-device/config.json
+
+  warehouse:
+    image: device
+    build: devices/docker/device
+    container_name: warehouse-device
+    restart: always
+    environment:
+      LOG_LEVEL: debug
+      CONFIG_FILE: /opt/warehouse-device/config.json
+    volumes:
+      - ${PWD}/devices/src/config/warehouse.json:/opt/warehouse-device/config.json

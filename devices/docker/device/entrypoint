@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+set -e
+
+if [ -n "$@" ]; then
+	exec "$@"
+fi
+
+exit 0

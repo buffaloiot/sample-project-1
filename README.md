@@ -12,6 +12,16 @@ The following architecture will be used in the sample project:
 
 Here we see the use of a message broker to facilite communication between two devices and their respective controllers.
 
+## Deploy
+
+To deploy the project you can install `docker-compose` and run:
+
+```
+make
+```
+
+This will build the sub-projects and will start the project containers on the current host running docker.
+
 ## Devices
 
 ### Tractor

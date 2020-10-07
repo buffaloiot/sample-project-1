@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+set -e
+
+exec node /usr/bin/supervisor -w device -- /usr/bin/device --log-level=${LOG_LEVEL} --config-file=${CONFIG_FILE}
