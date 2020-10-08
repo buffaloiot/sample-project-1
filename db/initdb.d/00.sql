@@ -6,9 +6,9 @@ GRANT CONNECT ON DATABASE sample to sample;
 
 \connect sample sample
 
--- replace with actual schema
-
-CREATE TABLE example (
+CREATE TABLE readings (
+	device	text,
+	sensor	text,
 	ts	timestamp with time zone,
-	data	text
+	reading	integer
 );
