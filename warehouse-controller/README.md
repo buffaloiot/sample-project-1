@@ -1,3 +1,0 @@
-# Warehouse Controller
-
-TBD
