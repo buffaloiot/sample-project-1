@@ -10,7 +10,7 @@ depend:
 	@npm install --no-package-lock
 	@echo "Done."
 
-tarball:
+tarball: package
 	@echo "==> Building npm package tarball"
 	@mv $$(npm pack 2>&1 | tail -1) docker/device/device.tgz
 
