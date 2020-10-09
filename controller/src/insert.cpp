@@ -1,7 +1,6 @@
 #include <ctime>
 #include <iostream>
 #include <pqxx/pqxx>
-#include <thread> 
  
 void insert(char *device, char *sensor, int reading)
 {
