@@ -7,7 +7,9 @@ GRANT CONNECT ON DATABASE sample to sample;
 \connect sample sample
 
 CREATE TABLE readings (
+	location text,
 	device	text,
+	device_id text,
 	sensor	text,
 	ts	timestamp with time zone,
 	reading	integer
