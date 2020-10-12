@@ -1,28 +1,44 @@
-#include <ctime>
-#include <iostream>
-#include <pqxx/pqxx>
- 
-void insert(char *device, char *sensor, int reading)
+/**
+ * DB Insert Functions
+ */
+
+#include "insert.hpp"
+
+/**
+ *  Function: insert_reading
+ *  Description:
+ *    Handle writing device readings to DB
+ */
+void insert_reading(appConfig *config, const char *location, const char *device, const char *device_id, const char *sensor, int reading)
 {
-	// example: PG_CONNECT_STRING=postgresql://sample:password@localhost/sample bin/controller
-	pqxx::connection connection{std::getenv("PG_CONNECT_STRING")};
+	// Create new PG connection
+	pqxx::connection connection{config->pg_connection};
+
+	// Mark insert with a timestamp
 	long int ts = static_cast<long int> (std::time(0));
-	std::string sql = "INSERT INTO readings(device, sensor, ts, reading) VALUES ($1, $2, to_timestamp($3), $4)";
+
+	// Prepare Reading
+	std::string sql = "INSERT INTO readings(location, device, device_id, sensor, ts, reading) VALUES ($1, $2, $3, $4, to_timestamp($5), $6)";
 	connection.prepare("readings_insert", sql);
+
 	try
 	{
+		// Perform transaction
 		pqxx::work transaction{connection};
-		transaction.exec_prepared("readings_insert", device, sensor, ts, reading);
+		cout << "DEBUG [insert] Prepare readings for location: " << location << ", device: " << device << ", device_id: " << device_id << ", sensor: " << sensor << ", ts: " << ts << ", reading: " << reading << endl;
+		transaction.exec_prepared("readings_insert", location, device, device_id, sensor, ts, reading);
 		transaction.commit();
 	}
 	catch (pqxx::sql_error const &e)
 	{
-		std::cerr << "SQL error: " << e.what() << std::endl;
+		// Handle SQL errors
+		std::cerr << "ERROR [insert] SQL: " << e.what() << std::endl;
 		return;
 	}
 	catch (std::exception const &e)
 	{
-		std::cerr << "Error: " << e.what() << std::endl;
+		// Handle other errors
+		std::cerr << "ERROR [insert] Other: " << e.what() << std::endl;
 		return;
 	}
 }

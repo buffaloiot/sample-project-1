@@ -42,6 +42,6 @@ $(BUILDDIR)/%.o: $(SRCDIR)/%.$(SRCEXT)
 
 clean:
 	@echo "==> Cleaning artifacts"
-	@$(RM) -r $(BUILDDIR) $(TARGET)
+	@$(RM) -rf $(BUILDDIR) $(TARGET)
 
 .PHONY: clean
