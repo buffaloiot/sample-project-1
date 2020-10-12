@@ -89,18 +89,18 @@ void mqtt_subscription_handler(struct mosquitto *mosq, void *obj, const struct m
 	if (strlen(message->topic) && strlen((char *)message->payload)) {
 		int reading = atoi((char *)message->payload);
 		string topic(message->topic);
-		string location, device, device_id, sensor;
+		string location, device_type, device_id, sensor;
 
 		istringstream iss(topic);
 
 		// Get topic tokens
 		getline(iss, location, '/');
-		getline(iss, device, '/');
+		getline(iss, device_type, '/');
 		getline(iss, device_id, '/');
 		getline(iss, sensor, '/');
 
 		// write device data to DB
-		insert_reading(Config, location.c_str(), device.c_str(), device_id.c_str(), sensor.c_str(), reading);
+		insert_reading(Config, location.c_str(), device_type.c_str(), device_id.c_str(), sensor.c_str(), reading);
 
 		// hand off message to handler
 		// TODO: Add handlers here
