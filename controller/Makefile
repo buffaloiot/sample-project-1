@@ -23,7 +23,7 @@ endif
 # mosquitto - Mosquitto MQTT Broker Library (sudo apt-get install -y libmosquitto-dev)
 # pqxx - C++ postgreSQL library, depends on pq so it's listed first (sudo apt-get install -y libpqxx-dev)
 # pq - C postgreSQL library (sudo apt-get install -y libpq-dev)
-LIB := -L lib -lpthread -lmosquitto -lpqxx -lpq
+LIB := -L lib -lmosquitto -lpqxx -lpq
 INC := -I include
 
 

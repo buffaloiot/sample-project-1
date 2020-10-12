@@ -8,7 +8,6 @@
 #include "insert.hpp"
 #include <iostream>
 #include <mosquitto.h>
-#include <thread>
 #include <string.h>
 #include <sstream>
 
