@@ -37,7 +37,7 @@ $(TARGET): $(OBJECTS)
 
 $(BUILDDIR)/%.o: $(SRCDIR)/%.$(SRCEXT)
 	@echo "==> Compiling source $<"
-	@mkdir -p $(BUILDDIR)
+	@mkdir -p $(dir $@)
 	@$(CC) $(CFLAGS) $(INC) -c -o $@ $<
 
 clean:
