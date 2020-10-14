@@ -1,0 +1,29 @@
+{
+  "engine_overheat": {
+    "type": "hysteresis",
+    "subTopic": "farm/tractor/device1/temp",
+    "pubTopic": "farm/tractor/device1/cmd/speed",
+    "hysterisis": {
+      "max": {
+        "limit": 100,
+        "value": 0,
+        "repeat": true
+      },
+      "min": {
+        "limit": 50,
+        "value": 60,
+        "repeat": false
+      }
+    }
+  },
+  "wheel_position": {
+    "type": "scheduler",
+    "pubTopic": "farm/tractor/devices1/cmd/wheel_position",
+    "interval": 1,
+    "max": 60,
+    "schedule": {
+      "0": -45,
+      "20": 0
+    }
+  }
+}

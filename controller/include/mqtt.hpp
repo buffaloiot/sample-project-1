@@ -4,16 +4,12 @@
  * MQTT Client Headers
  */
 
-#include "config.hpp"
-#include "insert.hpp"
-#include <iostream>
+#include "handlers.hpp"
 #include <mosquitto.h>
-#include <string.h>
-#include <sstream>
 
-using namespace std;
-
-// Thread main function
+// Functions
 extern void start_mqtt();
-extern mosquitto *create_mqtt_client();
+extern mosquitto *create_mqtt_client(vector<Handlers *>*);
 extern void mqtt_subscription_handler(struct mosquitto*, void*, const struct mosquitto_message*);
+extern void init_handlers(vector<Handlers *>&, mosquitto*);
+extern void start_timer_handlers(vector<Handlers *>&);

@@ -21,9 +21,10 @@ ifeq ($(shell test $(CCVERSION) -le 10; echo $$?), 0)
 endif
 
 # mosquitto - Mosquitto MQTT Broker Library (sudo apt-get install -y libmosquitto-dev)
+# jsoncpp - JSON parsing Library (sudo apt-get install -y libjsoncpp-dev)
 # pqxx - C++ postgreSQL library, depends on pq so it's listed first (sudo apt-get install -y libpqxx-dev)
 # pq - C postgreSQL library (sudo apt-get install -y libpq-dev)
-LIB := -L lib -lmosquitto -lpqxx -lpq
+LIB := -L lib -lmosquitto -lpqxx -lpq -ljsoncpp -pthread
 INC := -I include
 
 

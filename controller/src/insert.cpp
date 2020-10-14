@@ -3,6 +3,10 @@
  */
 
 #include "insert.hpp"
+#include "config.hpp"
+#include <ctime>
+#include <iostream>
+#include <pqxx/pqxx>
 
 /**
  *  Function: insert_reading

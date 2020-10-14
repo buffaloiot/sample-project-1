@@ -3,16 +3,30 @@
  */
 
 #include "mqtt.hpp"
+#include "config.hpp"
+#include "handlers.hpp"
+#include "insert.hpp"
+#include <chrono>
+#include <functional>
+#include <iostream>
+#include <mosquitto.h>
+#include <sstream>
+#include <string.h>
+#include <thread>
+#include <vector>
+
+using namespace std;
 
 /**
  *  Function: start_mqtt
  *  Description:
  *    Start MQTT Client using the application configuration object
  */
-void start_mqtt() {
-
+void start_mqtt()
+{
 	int ret;
 	struct mosquitto *mosq_client;
+	vector<Handlers *> handlers;
 
 	cout << "INFO [mqtt] Intialize MQTT Client" << endl;
 
@@ -20,10 +34,17 @@ void start_mqtt() {
 	mosquitto_lib_init();
 
 	// Start MQTT Client
-	mosq_client = create_mqtt_client();
+	mosq_client = create_mqtt_client(&handlers);
 
 	// Check if a client was created
 	if (mosq_client != nullptr) {
+		// Initialize Handlers
+		init_handlers(handlers, mosq_client);
+
+		// Create timer based handlers
+		start_timer_handlers(handlers);
+
+		// Setup subscription last
 		// Create subscription to listen for messages from devices
 		ret = mosquitto_subscribe(mosq_client, NULL, Config->mqtt_sub_topic.c_str(), 0);
 		if (ret) {
@@ -49,14 +70,13 @@ void start_mqtt() {
  *  Description:
  *    Create a MQTT Client instance and start connection
  */
-mosquitto *create_mqtt_client()
+mosquitto *create_mqtt_client(vector<Handlers *> *handlers)
 {
-
 	struct mosquitto *mosq = NULL;
 
 	// Create a Mosquitto Runtime instance
 	// Use a random client ID
-	mosq = mosquitto_new(NULL, true, NULL);
+	mosq = mosquitto_new(NULL, true, (void *) handlers);
 
 	if (!mosq) {
 		cerr << "ERROR [mqtt] Can't initialize Mosquitto library" << endl;
@@ -83,9 +103,9 @@ mosquitto *create_mqtt_client()
  */
 void mqtt_subscription_handler(struct mosquitto *mosq, void *obj, const struct mosquitto_message *message)
 {
-	// Received message
-	cout << "DEBUG [mqtt] Received Topic: " << message->topic << ", Message: " << (char *) message->payload << endl;
+	vector<Handlers *> *handlers = (vector<Handlers *> *) obj;
 
+	// Received message
 	if (strlen(message->topic) && strlen((char *)message->payload)) {
 		int reading = atoi((char *)message->payload);
 		string topic(message->topic);
@@ -103,9 +123,60 @@ void mqtt_subscription_handler(struct mosquitto *mosq, void *obj, const struct m
 		insert_reading(Config, location.c_str(), device_type.c_str(), device_id.c_str(), sensor.c_str(), reading);
 
 		// hand off message to handler
-		// TODO: Add handlers here
+		for (int idx = 0; idx < handlers->size(); idx++) {
+			Handlers *handler = (*handlers)[idx];
+			if (handler->getType() == HandlerTypes::topic) {
+				// Process message with topic handler
+				handler->handleTopic(string(message->topic), string((char *)message->payload));
+			}
+		}
 
 	} else {
 		cerr << "ERROR [mqtt] Received invalid message" << endl;
+	}
+}
+
+/**
+ * Function: init_handlers
+ * Description:
+ *   Initialize all configured handler plugins and add them to the list of handlers.
+ *   Handlers may be topic or timer based.
+ */
+void init_handlers(vector<Handlers *> &handlers, mosquitto *client)
+{
+	// iterate over configure iterators
+	for(Json::Value::const_iterator it=Config->handlers.begin(); it != Config->handlers.end(); ++it) {
+		string name(it.key().asString());
+		Json::Value hconfig = Config->handlers[name];
+		handlers.push_back(Handlers::makeHandler(hconfig["type"].asString(), name, client, Config));
+	}
+}
+
+/**
+ * Function: start_timer_handlers
+ * Description:
+ *   Start any timer based handlers
+ */
+void start_timer_handlers(vector<Handlers *> &handlers)
+{
+	// iterate over all handlers
+	for (int idx = 0; idx < handlers.size(); idx++) {
+		if (handlers[idx]->getType() == HandlerTypes::timer) {
+			cout << "INFO [handlers] Starting timer handler: " << handlers[idx]->getName() << endl;
+
+			// Start timer
+			// Get interval in milliseconds
+			Json::Value *jsonInterval = handlers[idx]->getValue("interval");
+			unsigned int interval = jsonInterval ? jsonInterval->asInt() : 1;
+			interval *= 1000;
+			Handlers *handler = handlers[idx];
+			thread([handler, interval]() {
+				while (true) {
+					auto next_time = std::chrono::steady_clock::now() + std::chrono::milliseconds(interval);
+					handler->handleTimeout();
+					std::this_thread::sleep_until(next_time);
+				}
+			}).detach();
+		}
 	}
 }

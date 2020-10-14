@@ -1,0 +1,42 @@
+{
+  "engine_overheat": {
+    "type": "hysteresis",
+    "subTopic": "farm/tractor/device1/temp",
+    "pubTopic": "farm/tractor/device1/cmd/speed",
+    "hysteresis": {
+      "max": {
+        "limit": 40,
+        "value": 0,
+        "repeat": true
+      },
+      "min": {
+        "limit": 30,
+        "value": 60,
+        "repeat": false
+      }
+    }
+  },
+  "wheel_position": {
+    "type": "scheduler",
+    "pubTopic": "farm/tractor/devices1/cmd/wheel_position",
+    "interval": 1,
+    "max": 60,
+    "schedule": {
+      "0": -45,
+      "20": 0
+    }
+  },
+  "door_open": {
+    "type": "state",
+    "subTopic": "farm/warehouse/device2/door_state",
+    "pubTopic": "farm/warehouse/device2/cmd/temp",
+    "state_count": {
+      "0": 5,
+      "1": 1
+    },
+    "state": {
+      "0": 0,
+      "1": -10 
+    }
+  }
+}

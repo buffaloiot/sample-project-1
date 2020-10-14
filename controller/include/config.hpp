@@ -5,6 +5,7 @@
  */
 
 #include <iostream>
+#include <jsoncpp/json/json.h>
 
 using namespace std;
 
@@ -15,6 +16,7 @@ typedef struct {
 	string mqtt_sub_topic;
 	unsigned int mqtt_keepalive_interval;
 	string pg_connection;
+	Json::Value handlers;
 } appConfig;
 
 // Global configuration object

@@ -31,7 +31,7 @@
 					"type": "random",
 					"min": 0,
 					"max": 1,
-					"incr_threshold": 0.9,
+					"incr_threshold": 0.85,
 					"decr_threshold": 0.5
 				}
 			}

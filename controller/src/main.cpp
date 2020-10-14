@@ -2,14 +2,16 @@
  *  Main
  */
 
-#include "main.hpp"
+#include "config.hpp"
+#include "mqtt.hpp"
+#include <iostream>
+
+using namespace std;
 
 appConfig *Config;
 
 int main (int argc, char **argv)
 {
-	int rc;
-
 	// get application configuration
 	Config = process_env();
 

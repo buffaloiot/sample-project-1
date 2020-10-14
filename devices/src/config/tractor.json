@@ -16,10 +16,12 @@
 				"enabled": true,
 				"speed": 0,
 				"simulator": {
-					"type": "stair",
+					"type": "random",
 					"step_interval": 5,
 					"min": 0,
-					"max": 60
+					"max": 60,
+					"decr_threshold": 0.45,
+					"incr_threshold": 0.55
 				}
 			},
 			"wheel_position": {
@@ -35,14 +37,12 @@
 			"temp": {
 				"type": "temp",
 				"enabled": true,
-				"temp": 12,
+				"temp": 20,
 				"simulator": {
-					"type": "random",
-					"step_interval": 1,
-					"min": 12,
-					"max": 130,
-					"incr_threshold": 0.2,
-					"decr_threshold": 0.4
+					"type": "stair",
+					"step_interval": 2,
+					"min": 20,
+					"max": 50
 				}
 			}
 		}

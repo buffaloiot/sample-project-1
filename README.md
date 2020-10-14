@@ -126,7 +126,7 @@ The controller will store the sensor data in a PostgreSQL relational database.
 #### Logic
 
 The controller will monitor the engine temperature and will stop the tractor if the temperature is above 100 celcius.
-Also, every minute, rotate the wheels 45 degrees to the left for 5 seconds and then straighten the tractor out.
+Also, every minute, rotate the wheels 45 degrees to the left for 20 seconds and then straighten the tractor out.
 
 #### Subscribe Topics
 
@@ -152,8 +152,8 @@ The controller will store the sensor data in a PostgreSQL relational database.
 
 #### Logic
 
-If the door opens, the controller will lower the thermostat by 3 degrees to 30.
-If the door closes, the controller will raise the thermostat by 3 degrees to 33.
+If the door opens, the controller will lower the thermostat to -10 degrees.
+If the door closes, the controller will raise the thermostat to 0 degrees
 
 #### Subscribe Topics
 
