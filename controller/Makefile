@@ -3,7 +3,7 @@
 #
 
 CC := g++
-CCVERSION = $(shell $(CC) -dumpversion)
+CCVERSION = $(shell $(CC) -dumpversion | awk -F'.' '{print $$1}')
 SRCDIR := src
 BUILDDIR := build
 RM := rm
@@ -45,4 +45,16 @@ clean:
 	@echo "==> Cleaning artifacts"
 	@$(RM) -rf $(BUILDDIR) $(TARGET)
 
-.PHONY: clean
+tarball:
+	@echo "==> Building controller package tarball"
+	@tar -cz -f docker/controller/controller.tgz include lib Makefile src
+
+image: tarball
+	@echo "==> Build image"
+	@cd ./docker/controller && docker build . -t localhost:5000/buffaloiot/controller:latest
+
+install:
+	@echo "==> Installing controller"
+	@cp ./bin/controller /usr/bin/controller
+
+.PHONY: tarball image clean install

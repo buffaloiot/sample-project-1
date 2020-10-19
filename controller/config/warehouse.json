@@ -3,9 +3,13 @@
     "type": "state",
     "subTopic": "farm/warehouse/device2/door_state",
     "pubTopic": "farm/warehouse/device2/cmd/temp",
+    "state_count": {
+      "0": 5,
+      "1": 1
+    },
     "state": {
-      "0": 33,
-      "1": 30
+      "0": 0,
+      "1": -10
     }
   }
 }

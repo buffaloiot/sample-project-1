@@ -3,14 +3,14 @@
     "type": "hysteresis",
     "subTopic": "farm/tractor/device1/temp",
     "pubTopic": "farm/tractor/device1/cmd/speed",
-    "hysterisis": {
+    "hysteresis": {
       "max": {
-        "limit": 100,
+        "limit": 40,
         "value": 0,
         "repeat": true
       },
       "min": {
-        "limit": 50,
+        "limit": 30,
         "value": 60,
         "repeat": false
       }
