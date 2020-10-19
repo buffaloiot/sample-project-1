@@ -10,7 +10,7 @@ device:
 
 controller:
 	@echo "==> building controller artifacts"
-	@cd controller && make tarball
+	@cd controllers && make tarball
 
 deploy:
 	@docker-compose up --build -d

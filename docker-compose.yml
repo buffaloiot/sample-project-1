@@ -47,7 +47,7 @@ services:
 
   tractor-controller:
     image: controller
-    build: controller/docker/controller
+    build: controllers/docker/controller
     container_name: tractor-controller
     restart: always
     environment:
@@ -58,11 +58,11 @@ services:
       MQTT_SUB_TOPIC: farm/tractor/#
       HANDLER_CONFIG_FILE: /opt/controller/config.json
     volumes:
-      - ${PWD}/controller/config/tractor.json:/opt/controller/config.json
+      - ${PWD}/controllers/config/tractor.json:/opt/controller/config.json
 
   warehouse-controller:
     image: controller
-    build: controller/docker/controller
+    build: controllers/docker/controller
     container_name: warehouse-controller
     restart: always
     environment:
@@ -73,4 +73,4 @@ services:
       MQTT_SUB_TOPIC: farm/warehouse/#
       HANDLER_CONFIG_FILE: /opt/controller/config.json
     volumes:
-      - ${PWD}/controller/config/warehouse.json:/opt/controller/config.json
+      - ${PWD}/controllers/config/warehouse.json:/opt/controller/config.json
