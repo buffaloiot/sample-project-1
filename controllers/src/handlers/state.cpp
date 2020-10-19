@@ -22,6 +22,15 @@
 
 using namespace std;
 
+/**
+ * State Handler Class Member Function: State
+ * Description:
+ *   State Constructor
+ * Args:
+ *   name - name of handler instance
+ *   client - mosquitto client
+ *   appConfig - application configuration object
+ */
 State::State(string name, mosquitto *client, appConfig *config) : Handlers(name, client, config)
 {
 	// Setup type of handler
@@ -40,6 +49,15 @@ State::State(string name, mosquitto *client, appConfig *config) : Handlers(name,
 	}
 }
 
+/**
+ * State Handler Class Member Function: handleTopic
+ * Description:
+ *   Process topic and message.  Ignore if not configured to handle.
+ *   Supports only explicit topic matches.
+ * Args:
+ *   topic - current MQTT topic for associated message
+ *   msg - current message
+ */
 void State::handleTopic(string topic, string msg)
 {
 	// verify this instance handles topic

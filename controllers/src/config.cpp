@@ -14,7 +14,13 @@ using namespace std;
 /**
  * Function: get_env
  * Description:
- *   Get env value for key
+ *   Get env value for environment variable name.   If environment variable
+ *   is unset, the default value is used.
+ * Args:
+ *   key - environment variable name
+ *   def - default value
+ * Returns:
+ *   string - value set for environment variable
  */
 string get_env(std::string const& key, std::string const def = "")
 {
@@ -27,7 +33,7 @@ string get_env(std::string const& key, std::string const def = "")
  * Description:
  *   Get configuration from environment variables
  * Returns:
- *   appConfig*
+ *   appConfig - application configuration data
  */
 appConfig *process_env(void)
 {

@@ -10,6 +10,11 @@ using namespace std;
 
 appConfig *Config;
 
+/**
+ *  Function: main
+ *  Description:
+ *    Application start point
+ */
 int main (int argc, char **argv)
 {
 	// get application configuration

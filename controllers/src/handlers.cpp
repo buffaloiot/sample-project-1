@@ -22,6 +22,13 @@ using namespace std;
  * Description:
  *   Handlers factory method for creating Handlers type objects from the known
  *   handler plugins.
+ * Args:
+ *   handler_plugin - type of handler
+ *   handler_name - name of handler instance
+ *   client - mosquitto client
+ *   appConfig - application configuration object
+ * Returns:
+ *   New handler object
  */
 Handlers *Handlers::makeHandler(string handler_plugin, string handler_name, mosquitto *client, appConfig *config)
 {
@@ -48,6 +55,10 @@ Handlers *Handlers::makeHandler(string handler_plugin, string handler_name, mosq
  * Handlers Class Member Function: Handlers
  * Description:
  *   Handlers Constructor
+ * Args:
+ *   name - name of handler instance
+ *   client - mosquitto client
+ *   appConfig - application configuration object
  */
 Handlers::Handlers(string name, mosquitto *client, appConfig *config) : client {client }, name{ name }
 {
@@ -69,6 +80,9 @@ Handlers::Handlers(string name, mosquitto *client, appConfig *config) : client {
  * Handlers Class Member Function: handleTopic
  * Description:
  *   Stub for topic based handlers
+ * Args:
+ *   topic - current MQTT topic for associated message
+ *   msg - current message
  */
 void Handlers::handleTopic(string topic, string msg)
 {
@@ -88,7 +102,9 @@ void Handlers::handleTimeout(void)
 /**
  * Handlers Class protected Member Function: publish
  * Description:
- *   Stub for timer based handlers
+ *   Generic function to publish messages to the instance pubTopic
+ * Args:
+ *   text - message to publish
  */
 void Handlers::publish(string text)
 {
@@ -105,6 +121,8 @@ void Handlers::publish(string text)
  * Handlers Class Member Function: getName
  * Description:
  *   returns the name of handler
+ * Returns:
+ *   Handler name
  */
 string Handlers::getName()
 {
@@ -114,7 +132,9 @@ string Handlers::getName()
 /**
  * Handlers Class Member Function: getType
  * Description:
- *   returns the type of handler, topic or timer
+ *   returns the type of handler
+ * Returns:
+ *   topic or timer
  */
 HandlerTypes::type Handlers::getType()
 {
@@ -125,6 +145,10 @@ HandlerTypes::type Handlers::getType()
  * Handlers Class Member Function: getValue
  * Description:
  *   Get JSON Value from handler config
+ * Args:
+ *   key - configuration property to get value for
+ * Returns:
+ *   json value object
  */
 Json::Value *Handlers::getValue(string key)
 {
@@ -138,6 +162,10 @@ Json::Value *Handlers::getValue(string key)
  * Handlers Class Member Function: getMapValue
  * Description:
  *   Get JSON Value from map for a given index
+ * Args:
+ *   key - configuration property to get value for
+ * Returns:
+ *   json value object
  */
 Json::Value *Handlers::getMapValue(string key, string idx)
 {
@@ -146,4 +174,3 @@ Json::Value *Handlers::getMapValue(string key, string idx)
 	else
 		return nullptr;
 }
-

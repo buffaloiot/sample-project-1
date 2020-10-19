@@ -22,6 +22,15 @@
 
 using namespace std;
 
+/**
+ * Scheduler Handler Class Member Function: Scheduler
+ * Description:
+ *   Scheduler Constructor
+ * Args:
+ *   name - name of handler instance
+ *   client - mosquitto client
+ *   appConfig - application configuration object
+ */
 Scheduler::Scheduler(string name, mosquitto *client, appConfig *config) : Handlers(name, client, config)
 {
 	// Setup type of handler
@@ -40,6 +49,11 @@ Scheduler::Scheduler(string name, mosquitto *client, appConfig *config) : Handle
 	}
 }
 
+/**
+ * Schduler Handler Class Member Function: handleTimeout
+ * Description:
+ *   Called when instance interval tick occurs
+ */
 void Scheduler::handleTimeout(void)
 {
 	// Get value for interval value

@@ -27,6 +27,15 @@
 #include "handlers/hysteresis.hpp"
 #include <mosquitto.h>
 
+/**
+ * Hysteresis Handler Class Member Function: Hysteresis
+ * Description:
+ *   Hysteresis Constructor
+ * Args:
+ *   name - name of handler instance
+ *   client - mosquitto client
+ *   appConfig - application configuration object
+ */
 Hysteresis::Hysteresis(string name, mosquitto *client, appConfig *config) : Handlers(name, client, config)
 {
 	// Setup type of handler
@@ -52,6 +61,15 @@ Hysteresis::Hysteresis(string name, mosquitto *client, appConfig *config) : Hand
 	}
 }
 
+/**
+ * Hysteresis Handler Class Member Function: handleTopic
+ * Description:
+ *   Process topic and message.  Ignore if not configured to handle.
+ *   Supports only explicit topic matches.
+ * Args:
+ *   topic - current MQTT topic for associated message
+ *   msg - current message
+ */
 void Hysteresis::handleTopic(string topic, string msg)
 {
 	if (topic == subTopic) {

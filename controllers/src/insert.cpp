@@ -11,7 +11,14 @@
 /**
  *  Function: insert_reading
  *  Description:
- *    Handle writing device readings to DB
+ *	  Handle writing device readings to DB
+ *  Args:
+ *    config - application configuration
+ *    location - device location
+ *    device_type - type of device
+ *    device_id - id of device
+ *    sensor - name of sensor
+ *    reading - sensor reading to store
  */
 void insert_reading(appConfig *config, const char *location, const char *device_type, const char *device_id, const char *sensor, int reading)
 {

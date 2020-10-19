@@ -68,7 +68,11 @@ void start_mqtt()
 /**
  *  Function: create_mqtt_client
  *  Description:
- *    Create a MQTT Client instance and start connection
+ *	  Create a MQTT Client instance and start connection
+ *  Args:
+ *    handlers - pointer to a list of handlers
+ *  Returns:
+ *    mosquitto - mosquitto client object
  */
 mosquitto *create_mqtt_client(vector<Handlers *> *handlers)
 {
@@ -98,8 +102,12 @@ mosquitto *create_mqtt_client(vector<Handlers *> *handlers)
 /**
  *  Function: mqtt_subscription_handler
  *  Description:
- *    Handle all subscription messages and start handler logic based on topic stucture of
- *    <location>/<device>/<device ID>/<sensor>
+ *	  Handle all subscription messages and start handler logic based on topic stucture of
+ *	  <location>/<device>/<device ID>/<sensor>
+ *  Args:
+ *    mosq - mosquitto client object
+ *    obj - handlers object as configured with mosquitto_new
+ *    message - received message
  */
 void mqtt_subscription_handler(struct mosquitto *mosq, void *obj, const struct mosquitto_message *message)
 {
@@ -139,8 +147,11 @@ void mqtt_subscription_handler(struct mosquitto *mosq, void *obj, const struct m
 /**
  * Function: init_handlers
  * Description:
- *   Initialize all configured handler plugins and add them to the list of handlers.
- *   Handlers may be topic or timer based.
+ *   Initialize all configured handler plugins using Factory Pattern and add
+ *   them to the list of handlers.  Handlers may be topic or timer based.
+ * Args:
+ *   handlers - reference to vector object of handlers
+ *   client - misquitto client object
  */
 void init_handlers(vector<Handlers *> &handlers, mosquitto *client)
 {
@@ -156,6 +167,8 @@ void init_handlers(vector<Handlers *> &handlers, mosquitto *client)
  * Function: start_timer_handlers
  * Description:
  *   Start any timer based handlers
+ * Args:
+ *   handlers - reference to a list of handlers
  */
 void start_timer_handlers(vector<Handlers *> &handlers)
 {

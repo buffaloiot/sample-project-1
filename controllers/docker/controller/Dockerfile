@@ -25,7 +25,7 @@ RUN apt-get update && \
 ## touch a file so we can see which files were installed after this point
 RUN /usr/bin/touch /tmp/__install_start
 
-RUN apt-get install -y libmosquitto-dev libjsoncpp-dev libpqxx-dev libpq-dev libldap-2.4-2 libkeyutils1
+RUN apt-get install -y libmosquitto-dev libjsoncpp-dev libpqxx-dev libpq-dev
 
 RUN cd /tmp/build && \
 	tar xvfz controller.tgz && \
