@@ -47,7 +47,7 @@ clean:
 
 tarball:
 	@echo "==> Building controller package tarball"
-	@tar -cz -f docker/controller/controller.tgz include lib Makefile src
+	@tar -cz -f docker/controller/controller.tgz include Makefile src
 
 image: tarball
 	@echo "==> Build image"
