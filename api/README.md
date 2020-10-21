@@ -18,9 +18,10 @@ For more info on OpenAPI  see (https://swagger.io/).
 
 ## TypeScript + Node 
 
-This npm package is wriiten in typescript.
-It uses express-openapi-validator for input and output validation, and swagger-ui-express to serve the openAPI doc defining the API.
-Based on the example at (https://github.com/rhappdev/nodejs-template/tree/openapi3)
+The source for this application is written in typescript. It must be compiled to javascript to create the npm package.
+It was based on the example at (https://github.com/rhappdev/nodejs-template/tree/openapi3).
+It uses [express-openapi-validator](https://www.npmjs.com/package/express-openapi-validator) for input and output validation, and [swagger-ui-express](https://www.npmjs.com/package/swagger-ui-express) to serve the openAPI doc defining the API.
+
 Special attributes in the swagger file:
 - `x-swagger-router-controller` names the file in the routes directory
 - `operationId` names the handler function to be invoked
@@ -42,7 +43,7 @@ Special attributes in the swagger file:
 | tsconfig.json            | Config settings for compiling source code written in TypeScript  |
 | tslint.json              | Config settings for TSLint code style checking                   |
 
-## Building the project
+## Building the package
 
 Makefile has the targets necessary to build the npm package and Docker image.
 
