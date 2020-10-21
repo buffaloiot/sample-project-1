@@ -23,6 +23,18 @@ services:
     volumes:
       - ${PWD}/broker/config/mosquitto.conf:/mosquitto/config/mosquitto.conf
 
+  api:
+    image: api
+    build: api/docker/api
+    container_name: api
+    restart: always
+    environment:
+      LOG_LEVEL: debug
+      PG_CONNECT_STRING: postgres://sample:password@172.17.0.1:5432/sample
+      PORT: 8080
+    ports:
+      - 8080:8080
+
   tractor-device:
     image: device
     build: devices/docker/device

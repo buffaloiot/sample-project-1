@@ -1,0 +1,124 @@
+openapi: 3.0.0
+info:
+  title: Sample API
+  description: API for Sample Project 1.
+  version: '1.0'
+paths:
+  /readings:
+    get:
+      x-eov-operation-handler: readings
+      operationId: readingsGet
+      tags:
+        - Readings
+      description: >-
+        Returns list of sensor readings.
+      parameters:
+        - name: location
+          in: query
+          description: Location of device
+          required: false
+          schema:
+            type: string
+            example: "farm"
+        - name: device_type
+          in: query
+          description: Type of device
+          required: false
+          schema:
+            type: string
+            example: "tractor"
+        - name: device_id
+          in: query
+          description: ID of device
+          required: false
+          schema:
+            type: string
+            example: "device1"
+        - name: sensor
+          in: query
+          description: Name of sensor
+          required: false
+          schema:
+            type: string
+            example: "engine_temp"
+        - name: start_time
+          in: query
+          description: Start of time range
+          required: false
+          schema:
+            type: string
+            format: date
+            example: "2020-10-15 14:59:43"
+        - name: end_time
+          in: query
+          description: End of time range
+          required: false
+          schema:
+            type: string
+            format: date
+            example: "2020-10-16 14:59:43"
+        - name: min_value
+          in: query
+          description: minimum reading value
+          required: false
+          schema:
+            type: integer
+            example: 42
+        - name: max_value
+          in: query
+          description: maximum reading value
+          required: false
+          schema:
+            type: integer
+            example: 42
+      responses:
+        '200':
+          description: Successful request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Reading'
+        default:
+          description: Invalid request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+servers:
+  - url: '/api'
+components:
+  schemas:
+    Error:
+      properties:
+        message:
+          type: string
+      required:
+        - message
+    Reading:
+      properties:
+        location:
+          type: string
+          example: "farm"
+        device_type:
+          type: string
+          example: "tractor"
+        device_id:
+          type: string
+          example: "device1"
+        sensor:
+          type: string
+          example: "engine_temp"
+        ts:
+          type: string
+          format: date
+          example: "2020-10-16 14:59:43"
+        reading:
+          type: integer
+          example: 42
+      required:
+       - location
+       - device_type
+       - device_id
+       - sensor
+       - ts
+       - reading

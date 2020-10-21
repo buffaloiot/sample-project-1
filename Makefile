@@ -2,7 +2,7 @@
 
 all: build deploy
 
-build: device controller
+build: device controller api
 
 device:
 	@echo "==> building device artifacts"
@@ -11,6 +11,10 @@ device:
 controller:
 	@echo "==> building controller artifacts"
 	@cd controllers && make tarball
+
+api:
+	@echo "==> building api artifacts"
+	@cd api && make tarball
 
 deploy:
 	@docker-compose up --build -d

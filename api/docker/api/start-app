@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+set -e
+
+cd /usr/lib/node_modules
+exec node /usr/bin/supervisor -w api -- /usr/lib/node_modules/api/dist/index.js
