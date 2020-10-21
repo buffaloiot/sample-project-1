@@ -12,9 +12,9 @@ For more info on OpenAPI  see (https://swagger.io/).
 | Name                | Default Value                                      | Description                                     |
 | ------------------- | -------------------------------------------------- | ----------------------------------------------- |
 | `CORS`              | `*`                                                | Cors accepted values                            |
-| 'LOG_LEVEL'         | 'info'                                             | Level at or above which messages will be logged |
-| 'PG_CONNECT_STRING' | 'postgres://sample:password@localhost:5432/sample' | Postgres URL                                    |
-| 'PORT'              |  8001                                              | Port API server listens on                      |
+| `LOG_LEVEL`         | `info`                                             | Level at or above which messages will be logged |
+| `PG_CONNECT_STRING` | `postgres://sample:password@localhost:5432/sample` | Postgres URL                                    |
+| `PORT`              |  8001                                              | Port API server listens on                      |
 
 ## TypeScript + Node 
 
