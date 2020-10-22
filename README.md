@@ -11,6 +11,8 @@ The following architecture will be used in the sample project:
 ![Architecture](docs/architecture.png)
 
 Here we see the use of a message broker to facilite communication between two devices and their respective controllers.
+The controllers save received readings data to the database.
+The REST API retrieves data from the database in response to HTTP requests.
 
 ## Deploy
 
