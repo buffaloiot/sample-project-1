@@ -127,6 +127,9 @@ void mqtt_subscription_handler(struct mosquitto *mosq, void *obj, const struct m
 		getline(iss, device_id, '/');
 		getline(iss, sensor, '/');
 
+		// ignore commands sent to devices loopbacked to controller
+		if (sensor == "cmd") return;
+
 		// write device data to DB
 		insert_reading(Config, location.c_str(), device_type.c_str(), device_id.c_str(), sensor.c_str(), reading);
 

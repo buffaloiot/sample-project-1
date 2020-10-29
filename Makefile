@@ -2,7 +2,7 @@
 
 all: build deploy
 
-build: device controller api
+build: api device controller
 
 device:
 	@echo "==> building device artifacts"
@@ -18,3 +18,5 @@ api:
 
 deploy:
 	@docker-compose up --build -d
+
+.PHONY: api

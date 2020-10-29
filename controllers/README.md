@@ -98,7 +98,7 @@ Three predefined handlers were included that send command values to a device sub
   },
   "wheel_position": {
     "type": "scheduler",
-    "pubTopic": "farm/tractor/devices1/cmd/wheel_position",
+    "pubTopic": "farm/tractor/device1/cmd/wheel_position",
     "interval": 1,
     "max": 60,
     "schedule": {
