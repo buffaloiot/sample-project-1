@@ -9,3 +9,4 @@ plato
 .DS_Store
 *.sw*
 dist
+run*

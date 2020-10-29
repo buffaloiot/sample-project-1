@@ -15,7 +15,7 @@ CREATE TABLE readings (
 	reading integer
 );
 
-CREATE OR REPLACE FUNCTION readings_get_json(
+CREATE OR REPLACE FUNCTION get_readings(
 	_location text,
 	_device_type text,
 	_device_id text,
@@ -25,14 +25,18 @@ CREATE OR REPLACE FUNCTION readings_get_json(
 	_min_value integer,
 	_max_value integer
 )
-RETURNS JSON
-AS
-$$
-DECLARE
-	_result json;
+RETURNS TABLE (
+	location TEXT,
+	device_type TEXT,
+	device_id TEXT,
+	sensor TEXT,
+	ts TIMESTAMP WITH TIME ZONE,
+	reading INTEGER
+)
+LANGUAGE plpgsql
+AS $$
 BEGIN
-	SELECT INTO _result to_json(array_agg(r))
-	FROM (SELECT
+	RETURN QUERY SELECT
 		readings.location,
 		readings.device_type,
 		readings.device_id,
@@ -49,14 +53,11 @@ BEGIN
 		(_start_time IS NULL OR readings.ts >= _start_time) AND
 		(_end_time IS NULL OR readings.ts <= _end_time) AND
 		(_min_value IS NULL OR readings.reading >= _min_value) AND
-		(_max_value IS NULL OR readings.reading <= _max_value)) AS r;
-	IF _result IS NULL THEN
-		_result = '[]'::json;
-	END IF;
-	RETURN _result;
+		(_max_value IS NULL OR readings.reading <= _max_value);
 END;
-$$ LANGUAGE 'plpgsql';
+$$;
 
+\echo Create function get_sensors
 CREATE OR REPLACE FUNCTION get_sensors (
 	_device_id TEXT
 )
@@ -76,6 +77,7 @@ AS $$
 	END;
 $$ LANGUAGE 'plpgsql';
 
+\echo Create function device_get_json
 CREATE OR REPLACE FUNCTION get_devices(
 	_location TEXT,
 	_device_type TEXT,
