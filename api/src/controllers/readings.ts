@@ -10,7 +10,7 @@ export async function getReadings(req: Request, res: Response): Promise<any> {
       debug.info('query params', req.query)
       const { location, device_type, device_id, sensor, start_time, end_time, min_value, max_value } = req.query
       const params = [ location, device_type, device_id, sensor, start_time, end_time, min_value, max_value ]
-      const result = await client.query('select readings_get_json($1,$2,$3,$4,$5,$6,$7,$8) from readings', params)
+      const result = await client.query('select readings_get_json($1,$2,$3,$4,$5,$6,$7,$8)', params)
       debug.info('result', result)
       res.send(JSON.stringify(result.rows[0].readings_get_json))
     } catch(e) {

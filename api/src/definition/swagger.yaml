@@ -4,6 +4,49 @@ info:
   description: API for Sample Project 1.
   version: '1.0'
 paths:
+  /devices:
+    get:
+      x-eov-operation-handler: devices
+      operationId: devicesGet
+      tags:
+        - Devices
+      description: >-
+        Returns list of devices.
+      parameters:
+        - name: location
+          in: query
+          description: Location of device
+          required: false
+          schema:
+            type: string
+            example: "farm"
+        - name: device_type
+          in: query
+          description: Type of device
+          required: false
+          schema:
+            type: string
+            example: "tractor"
+        - name: device_id
+          in: query
+          description: ID of device
+          required: false
+          schema:
+            type: string
+            example: "device1"
+      responses:
+        '200':
+          description: Successful request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Device'
+        default:
+          description: Invalid request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
   /readings:
     get:
       x-eov-operation-handler: readings
@@ -47,16 +90,16 @@ paths:
           required: false
           schema:
             type: string
-            format: date
-            example: "2020-10-15 14:59:43"
+            format: date-time
+            example: "2020-10-15T14:59:43Z"
         - name: end_time
           in: query
           description: End of time range
           required: false
           schema:
             type: string
-            format: date
-            example: "2020-10-16 14:59:43"
+            format: date-time
+            example: "2020-10-16T14:59:43Z"
         - name: min_value
           in: query
           description: minimum reading value
@@ -110,8 +153,8 @@ components:
           example: "engine_temp"
         ts:
           type: string
-          format: date
-          example: "2020-10-16 14:59:43"
+          format: date-time
+          example: "2020-10-15T14:59:43Z"
         reading:
           type: integer
           example: 42
@@ -122,3 +165,24 @@ components:
        - sensor
        - ts
        - reading
+    Device:
+      properties:
+        location:
+          type: string
+          example: "farm"
+        device_type:
+          type: string
+          example: "tractor"
+        device_id:
+          type: string
+          example: "device1"
+        sensors:
+          type: array
+          items:
+            type: string
+            example: "engine_temp"
+      required:
+       - location
+       - device_type
+       - device_id
+       - sensors
